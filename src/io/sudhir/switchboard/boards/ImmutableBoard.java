@@ -3,6 +3,7 @@ package io.sudhir.switchboard.boards;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
 import com.google.auto.value.AutoValue;
+import com.google.auto.value.extension.memoized.Memoized;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import io.sudhir.switchboard.Choice;
@@ -12,6 +13,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
+import javax.annotation.Nullable;
+
 
 @AutoValue
 abstract class ImmutableBoard implements Board {
@@ -29,9 +32,11 @@ abstract class ImmutableBoard implements Board {
   abstract Set<Demand> demands();
 
   @Override
+  @Nullable
   public abstract Optional<Choice> choice();
 
   @Override
+  @Nullable
   public abstract Optional<Board> board();
 
   @Override
@@ -53,6 +58,7 @@ abstract class ImmutableBoard implements Board {
   }
 
   @Override
+  @Memoized
   public boolean isComplete() {
     return !pendingDemands().findAny().isPresent();
   }
